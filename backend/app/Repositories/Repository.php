@@ -60,13 +60,23 @@ class Repository
     }
 
     /**
-     * Obtener un dato especifico basado en su primary key
+     * Obtener data especifica basada en su primary key
      *
      * @var string
      */
     public function show($pk)
     {
-        return $this->model-findOrFail($pk);
+        return $this->model->findOrFail($pk);
+    }
+
+    /**
+     * Obtener un conjunto de data especifica, basada en su PK
+     *
+     * @var string
+     */
+
+    public function showMany($pks){
+        return $this->model->findMany($pks);
     }
 
     /**
@@ -96,8 +106,7 @@ class Repository
      *
      * @var array
      */
-    public function with($relations)
-    {
+    public function with($relations){
         return $this->model->with($relations);
     }
 }
