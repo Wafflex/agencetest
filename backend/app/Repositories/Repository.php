@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Repository implements RepositoryInterface
+class Repository
 {
     /**
      * Instancia del modelo

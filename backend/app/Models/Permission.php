@@ -1,8 +1,8 @@
-<?php
+<?php namespace App\Models;
 
-namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
 
-class Permission extends Authenticatable
+class Permission extends Model
 {
     /**
      * Name of table

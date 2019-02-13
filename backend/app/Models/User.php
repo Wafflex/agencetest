@@ -1,8 +1,8 @@
-<?php
+<?php namespace App\Models;
 
-namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
     /**
      * Nombre de la tabla
