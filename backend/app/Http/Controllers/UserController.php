@@ -60,18 +60,14 @@ class UserController extends Controller
     {   
         $pks = explode(',',$request->users);
 
-        $months = self::diffBetween2Dates($request);
-
-        return $months;
-
-        return var_dump(date_diff($since,$until));
-        
         $users = $this->model->showMany($pks);
 
         foreach ($users as $user){
-            $data[$user['no_usuario']][$since] = 1; 
+            $data[$user['no_usuario']][$request->since] = 1; 
         }
 
+
+        return $data;
   
 
         // $data[
@@ -79,29 +75,28 @@ class UserController extends Controller
         // ]
     }
 
-    private function diffBetween2Dates($request){
-        $since = $request->since;
-        $until = $request->until;
+    // private function diffBetween2Dates($request){
+    //     $since = $request->since;
+    //     $until = $request->until;
 
-        $output = [];
-        $time   = strtotime($since);
-        $last   = date('m-Y', strtotime($until));
+    //     $output = [];
+    //     $time   = strtotime($since);
+    //     $last   = date('d-m-Y', strtotime($until));
 
-        do {
-            $month = date('m', $time);
-            $year = date('Y',$time);
+    //     do {
+    //         $day = date('d', $time);
+    //         $month = date('m', $time);
+    //         $year = date('Y',$time);
 
-            // $days = date('t', $time);
+    //         // $days = date('t', $time);
 
-            $date = date('m-Y',$time);
+    //         $date = date('d-m-Y',$time);
             
 
-            $output[] = $date;
-            $time = strtotime('+1 month', $time);
-        } while ($date != $last);
+    //         $output[] = $date;
+    //         $time = strtotime('+1 month', $time);
+    //     } while ($date != $last);
 
-        return $output;
-    }
-
-
+    //     return $output;
+    // }
 }
