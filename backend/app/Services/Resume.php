@@ -3,34 +3,22 @@
     use App\Repositories\ResumeRepository;
 
     class Resume{
-        /**
-         * Ingresos netos
-         *
-         * @var float
-         */
-        private $neto;
 
         /**
-         * Ingreso fijo
+         * Instancia del repositorio
          *
-         * @var float
+         * @var model
          */
-        private $fijo;
+        private $model;
 
         /**
-         * Comisión
-         *
-         * @var float
-         */
-        private $comision;
-
-        /**
-         * Ganancia total
+         * data a retornar
          *
          * @var array
          */
-        private $lucro;
-        
+        private $data;
+
+
         /**
          * Recibo el pk del usuario y el intervalo de tiempo
          *
@@ -40,24 +28,29 @@
             $this->model = new ResumeRepository($users,$interval);
         }
 
-        /**
-         * Recibo como parametro la transaccion que quiero obtener
-         *
-         * @var string
-         */
-        public function get($field){
-            return $this->$field;
-        }
-
         public function build(){
-            $this->neto = $this->model->getNeto();
-            $this->fijo = $this->model->getFijo();
+            $data = $this->model->getResume();
+
+            foreach ($data as $dat){
+                $date = "$dat->anio-$dat->mes";
+
+                $date = date("F Y",strtotime($date));
+
+                $this->data[$dat->co_usuario][$date]['neto'] = $dat->neto;
+                $this->data[$dat->co_usuario][$date]['comision'] = $dat->comision;
+                $this->data[$dat->co_usuario][$date]['salario'] = $dat->salario;
+                $this->data[$dat->co_usuario][$date]['lucro'] = $dat->neto - ($dat->salario + $dat->comision);
+            }
+
+            return $this->data;
         }
 
         public function resume(){
-            $this->build();
+            return $this->build();
             return [
-                'neto' => $this->neto
+                'neto' => $this->neto,
+                'fijo' => $this->fijo,
+                'comision' => $this->comision
             ];
         }
     }

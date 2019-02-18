@@ -23,4 +23,8 @@ class User extends Model
     public function permission(){
         return $this->belongsTo(Permission::class,'co_usuario','co_usuario');
     }
+
+    public function salario(){
+        return $this->belongsTo(Salario::class,'co_usuario','co_usuario');
+    }
 }

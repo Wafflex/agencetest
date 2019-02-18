@@ -1,7 +1,6 @@
 <?php namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
 class Repository
 {
     /**
@@ -108,9 +107,5 @@ class Repository
      */
     public function with($relations){
         return $this->model->with($relations);
-    }
-
-    public function db(){
-        return DB;
     }
 }
