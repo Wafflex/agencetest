@@ -1,65 +1,98 @@
 <?php namespace App\Services;
 
+    use App\Repositories\ResumeRepository;
+    use DB;
+    
     class Resume{
 
         /**
-         * User de la transaccion
+         * Users de las transacciones
          *
          * @var string
          */
-        public $user;
+        public $users;
+
+        /**
+         * Intérvalo de tiempo del resumen
+         *
+         * @var array
+         */
+        public $interval;
 
         /**
          * Ingresos netos
          *
          * @var float
          */
-        public $neto;
+        private $neto;
 
         /**
          * Ingreso fijo
          *
          * @var float
          */
-        public $fijo;
+        private $fijo;
 
         /**
          * Comisión
          *
          * @var float
          */
-        public $comision;
+        private $comision;
 
         /**
          * Ganancia total
          *
          * @var array
          */
-        public $lucro;
+        private $lucro;
+
+        // /**
+        //  * Conjunto de transacciones
+        //  *
+        //  * @var array
+        //  */
+
+        // public $transactions;
+
 
         /**
-         * Conjunto de transacciones
-         *
-         * @var array
-         */
-
-        public $transactions;
-
-
-        /**
-         * Recibo el pk del usuario
+         * Recibo el pk del usuario y el intervalo de tiempo
          *
          * @var string
          */
-        public function __construct($user){
-            $this->user = $user;
+        public function __construct($users,$interval){
+            $this->users = $users;
+            $this->interval = (object) $interval;
+            $this->model = new ResumeRepository();
         }
 
-        
-        public function getNeto(){
-           
+        /**
+         * Recibo como parametro la transaccion que quiero obtener
+         *
+         * @var string
+         */
+        public function get($field){
+            return $this->$field;
         }
 
+
+        public function calculaNeto(){
+            $this->neto = DB::table('cao_fatura')
+                            ->whereIn('co_usuario',$this->users)
+                            ->get();
+        }
+
+        public function build(){
+            $this->calculaNeto();
+        }
+
+        public function resume(){
+            $this->build();
+            return [
+                'neto' => $this->neto
+            ];
+        }
     }
 
 ?>
