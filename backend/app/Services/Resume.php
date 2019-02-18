@@ -1,24 +1,8 @@
 <?php namespace App\Services;
 
     use App\Repositories\ResumeRepository;
-    use DB;
-    
+
     class Resume{
-
-        /**
-         * Users de las transacciones
-         *
-         * @var string
-         */
-        public $users;
-
-        /**
-         * Intérvalo de tiempo del resumen
-         *
-         * @var array
-         */
-        public $interval;
-
         /**
          * Ingresos netos
          *
@@ -46,25 +30,14 @@
          * @var array
          */
         private $lucro;
-
-        // /**
-        //  * Conjunto de transacciones
-        //  *
-        //  * @var array
-        //  */
-
-        // public $transactions;
-
-
+        
         /**
          * Recibo el pk del usuario y el intervalo de tiempo
          *
          * @var string
          */
         public function __construct($users,$interval){
-            $this->users = $users;
-            $this->interval = (object) $interval;
-            $this->model = new ResumeRepository();
+            $this->model = new ResumeRepository($users,$interval);
         }
 
         /**
@@ -76,15 +49,9 @@
             return $this->$field;
         }
 
-
-        public function calculaNeto(){
-            $this->neto = DB::table('cao_fatura')
-                            ->whereIn('co_usuario',$this->users)
-                            ->get();
-        }
-
         public function build(){
-            $this->calculaNeto();
+            $this->neto = $this->model->getNeto();
+            $this->fijo = $this->model->getFijo();
         }
 
         public function resume(){
