@@ -19,6 +19,7 @@ class User extends Model
      */
 
     protected $primaryKey = 'co_usuario';
+    public $incrementing = false;
 
     public function permission(){
         return $this->belongsTo(Permission::class,'co_usuario','co_usuario');
