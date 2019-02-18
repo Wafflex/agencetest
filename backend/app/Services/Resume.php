@@ -18,6 +18,20 @@
          */
         private $data;
 
+         /**
+         * Users de las transacciones
+         *
+         * @var string
+         */
+        public $users;
+
+        /**
+         * Intérvalo de tiempo del resumen
+         *
+         * @var array
+         */
+        public $interval;
+
 
         /**
          * Recibo el pk del usuario y el intervalo de tiempo
@@ -25,11 +39,13 @@
          * @var string
          */
         public function __construct($users,$interval){
-            $this->model = new ResumeRepository($users,$interval);
+            $this->users = $users;
+            $this->interval = $interval;
+            $this->model = new ResumeRepository();
         }
 
-        public function build(){
-            $data = $this->model->getResume();
+        private function build(){
+            $data = $this->model->getResume($this->users,$this->interval);
 
             foreach ($data as $dat){
                 $date = "$dat->anio-$dat->mes";
@@ -47,11 +63,6 @@
 
         public function resume(){
             return $this->build();
-            return [
-                'neto' => $this->neto,
-                'fijo' => $this->fijo,
-                'comision' => $this->comision
-            ];
         }
     }
 

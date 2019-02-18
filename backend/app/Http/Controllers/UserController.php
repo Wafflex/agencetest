@@ -43,7 +43,7 @@ class UserController extends Controller
         $this->response->data = $consultores;
         $this->response->errors = NULL;
 
-        return $response->toJson(200);
+        return $this->response->toJson(200);
     }
 
     /**
@@ -61,15 +61,15 @@ class UserController extends Controller
 
         $resume = $resume->resume();
 
-        return $resume;
+        $this->response->meta = [
+            'code' => 200
+        ];
 
-        $users = $this->model->showMany($pks);
+        $this->response->status = 'OK!';
+        $this->response->data = $resume;
+        $this->response->errors = NULL;
 
-        foreach ($users as $user){
-            $data[$user['no_usuario']][$request->since] = 1; 
-        }
-
-
-        return $data;
+        return $this->response->toJson(200);
+        
     }
 }
