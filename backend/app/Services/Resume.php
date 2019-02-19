@@ -55,24 +55,44 @@
     
                     $structure = [
                         'no_usuario' => $dat->no_usuario, 
-                        'data' => [[
+                        'resume' => [[
                             'date' => $date,
                             'neto' => $dat->neto,
                             'comision' => $dat->comision,
                             'salario' => $dat->salario,
-                            'lucro' => $dat->neto - ($dat->salario - $dat->comision)
+                            'lucro' => round($dat->neto - ($dat->salario - $dat->comision),2)
                         ]]
                     ];
-                    
-                    
+                
                     $results[] = $structure;
                 }
     
                 $this->data = $this->unique_multidim_array($results,'no_usuario');
+
+                foreach ($this->data as $index => $consultor){
+                    $totalNeto = $totalSalario = $totalComision = $totalLucro = 0;
+                    $tempData = [];
+                    foreach ($consultor['resume'] as $data){
+                        $totalNeto += $data['neto'];
+                        $totalSalario += $data['salario'];
+                        $totalComision += $data['comision'];
+                        $totalLucro += $data['lucro'];
+                        $tempData['monthly'][] = $data;
+                    }
+
+                    $output['totalNeto'] = $totalNeto;
+                    $output['totalSalario'] = $totalSalario;
+                    $output['totalComision'] = $totalComision;
+                    $output['totalLucro'] = $totalLucro;
+
+                    $tempData['totals'] = $output;
+                    
+                    $this->data[$index]['resume'] = $tempData;
+                }
             }else{
                 $this->data = NULL;
             } 
-            
+        
 
             return $this->data;
         }
@@ -91,7 +111,7 @@
                     }
 
                     if ($found){
-                        $temp_array[$index]['data'] = array_merge($temp_array[$index]['data'],$result['data']);
+                        $temp_array[$index]['resume'] = array_merge($temp_array[$index]['resume'],$result['resume']);
                     }else{
                         $temp_array[] = $result;
                     }

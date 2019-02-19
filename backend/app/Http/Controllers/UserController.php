@@ -61,6 +61,8 @@ class UserController extends Controller
 
         $resume = $resume->resume();
 
+        // return $resume;
+
         $this->response->meta = [
             'code' => 200
         ];
