@@ -16,7 +16,7 @@ class UserRepository extends Repository
                         ->where('permissao_sistema.in_ativo','S') //Establezco las condiciones indicadas en las instrucciones
                         ->whereIn('permissao_sistema.co_tipo_usuario',[0,1,2]);
             })
-            ->get(['co_usuario','no_usuario']);
+            ->get(['co_usuario','no_usuario','no_cidade']);
         
         return $consultores;
     }
