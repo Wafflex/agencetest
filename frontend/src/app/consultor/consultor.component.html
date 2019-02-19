@@ -1,0 +1,133 @@
+<div class="container">
+    <h2 class="text-muted">{{'CONSULTOR.TITLE' | translate}} | <small>{{'CONSULTOR.DESCRIPTION' | translate}}</small></h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="list-group">
+              <div *ngFor="let consultor of consultants" >
+                  <a href="javascript:void(0)" class="list-group-item" [class.active]="consultor.selected == true">
+                      <h4 class="list-group-item-heading" (click)="toggle(consultor)">{{consultor.no_usuario}}</h4>
+                  </a>
+              </div>
+            </div>
+        </div>
+
+        
+    
+        <div class="col-sm-3">
+          <div class="col-sm">
+            <h4 class="text-muted">{{'CONSULTOR.SINCE' | translate}}</h4>
+          </div>
+          <div class="col-sm">
+              <div class="form-group">
+                  <div class="form-group">
+                      <label>{{'CONSULTOR.MONTH' | translate}}</label>
+                      <select (change)="setSinceUntil('since','month',$event.target.value)" class="form-control">
+                          <option value="-1">--</option>
+                          <option value="01">{{'JAN' | translate}}</option>
+                          <option value="02">{{'FEB' | translate}}</option>
+                          <option value="03">{{'MAR' | translate}}</option>
+                          <option value="04">{{'APR' | translate}}</option>
+                          <option value="05">{{'MAY' | translate}}</option>
+                          <option value="06">{{'JUN' | translate}}</option>
+                          <option value="07">{{'JUL' | translate}}</option>
+                          <option value="08">{{'AUG' | translate}}</option>
+                          <option value="09">{{'SEP' | translate}}</option>
+                          <option value="10">{{'OCT' | translate}}</option>
+                          <option value="11">{{'NOV' | translate}}</option>
+                          <option value="12">{{'DEC' | translate}}</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm">
+              <div class="form-group">
+                  <label>{{'CONSULTOR.YEAR' | translate}}</label>
+                  <select (change)="setSinceUntil('since','year',$event.target.value)" class="form-control">
+                      <option value="-1">--</option>
+                      <option value="2003">2003</option>
+                      <option value="2004">2004</option>
+                      <option value="2005">2005</option>
+                      <option value="2006">2006</option>
+                      <option value="2007">2007</option>
+                  </select>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="col-sm">
+              <h4 class="text-muted">{{'CONSULTOR.UNTIL' | translate}}</h4>
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label>{{'CONSULTOR.MONTH' | translate}}</label>
+                        <select (change)="setSinceUntil('until','month',$event.target.value)" class="form-control">
+                            <option value="-1">--</option>
+                            <option value="01">{{'JAN' | translate}}</option>
+                            <option value="02">{{'FEB' | translate}}</option>
+                            <option value="03">{{'MAR' | translate}}</option>
+                            <option value="04">{{'APR' | translate}}</option>
+                            <option value="05">{{'MAY' | translate}}</option>
+                            <option value="06">{{'JUN' | translate}}</option>
+                            <option value="07">{{'JUL' | translate}}</option>
+                            <option value="08">{{'AUG' | translate}}</option>
+                            <option value="09">{{'SEP' | translate}}</option>
+                            <option value="10">{{'OCT' | translate}}</option>
+                            <option value="11">{{'NOV' | translate}}</option>
+                            <option value="12">{{'DEC' | translate}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <label>{{'CONSULTOR.YEAR' | translate}}</label>
+                    <select (change)="setSinceUntil('until','year',$event.target.value)" class="form-control">
+                        <option value="-1">--</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
+                        <option value="2006">2006</option>
+                        <option value="2007">2007</option>
+                    </select>
+                </div>
+            </div>
+          </div>  
+    </div>
+    
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center">
+            <button (click)="getData()" type="button" class="btn btn-lg btn-primary">{{ 'GET.DATA' | translate}}</button>
+        </div>
+    </div>
+    
+    
+    <div *ngFor="let resume of data">
+        <div class="card mb-3">
+            <div class="card-header">{{resume.no_usuario}}</div>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>{{'CONSULTOR.PERIOD' | translate }}</th>
+                    <th>{{'CONSULTOR.LIQUID' | translate }}</th>
+                    <th>{{'CONSULTOR.SALARY' | translate }}</th>
+                    <th>{{'CONSULTOR.COMISSION' | translate }}</th>
+                    <th>{{'CONSULTOR.PROFIT' | translate }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let row of resume.data">
+                    <th scope="row">{{row.date}}</th>
+                    <td> R$ {{row.neto}}</td>
+                    <td>- R$ {{row.salario}}</td>
+                    <td>- R$ {{row.comision}}</td>
+                    <td> R$ {{row.lucro}}</td>
+                </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
