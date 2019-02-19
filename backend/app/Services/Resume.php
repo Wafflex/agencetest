@@ -60,7 +60,7 @@
                             'neto' => $dat->neto,
                             'comision' => $dat->comision,
                             'salario' => $dat->salario,
-                            'lucro' => $dat->neto - ($dat->salario + $dat->comision)
+                            'lucro' => $dat->neto - ($dat->salario - $dat->comision)
                         ]]
                     ];
                     
