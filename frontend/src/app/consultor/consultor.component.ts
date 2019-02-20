@@ -90,14 +90,18 @@ export class ConsultorComponent implements OnInit {
 
   setData(res,type){
     this.data = res.data;
-
-    if (type == 0){
-      this.setBarData();
-    }else if (type == 2){
-      this.setPieData();
+    if (this.data != undefined){
+      if (type == 0){
+        this.setBarData();
+      }else if (type == 2){
+        this.setPieData();
+      }
+  
+      this.type = type;
+    }else{
+      alert('No se han obtenido resultados');
     }
-
-    this.type = type;
+    
   }
 
   setBarData(){
@@ -120,11 +124,8 @@ export class ConsultorComponent implements OnInit {
       data : [salarioPromedio], label : 'Average salaries'
     });
 
-    console.log(temp);
-
     this.barChartData = temp;
 
-    console.log(this.barChartData);
   }
 
   setPieData(){

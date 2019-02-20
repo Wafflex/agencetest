@@ -11,7 +11,9 @@ const routes: Routes = [
             { path: '', redirectTo: 'consultor', pathMatch: 'prefix' },
             { path: 'consultor', component : ConsultorComponent },
         ]
-    }
+        
+    },
+    { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
