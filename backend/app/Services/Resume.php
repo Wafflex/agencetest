@@ -46,7 +46,7 @@
 
         private function build(){
             $data = $this->model->getResume($this->users,$this->interval);
-            
+
             if ($data->count() > 0){
                 foreach ($data as $dat){
                     $date = "$dat->anio-$dat->mes";
@@ -63,12 +63,14 @@
                             'lucro' => round($dat->neto - ($dat->salario - $dat->comision),2)
                         ]]
                     ];
-                
+            
                     $results[] = $structure;
                 }
     
                 $this->data = $this->unique_multidim_array($results,'no_usuario');
 
+                // $salarioPromedio = 0;
+                
                 foreach ($this->data as $index => $consultor){
                     $totalNeto = $totalSalario = $totalComision = $totalLucro = 0;
                     $tempData = [];
@@ -79,6 +81,7 @@
                         $totalLucro += $data['lucro'];
                         $tempData['monthly'][] = $data;
                     }
+                    // $salarioPromedio += $data['salario'];
 
                     $output['totalNeto'] = $totalNeto;
                     $output['totalSalario'] = $totalSalario;
@@ -92,7 +95,8 @@
             }else{
                 $this->data = NULL;
             } 
-        
+
+            // $this->data['salarioPromedio'] = $salarioPromedio / COUNT($this->data);
 
             return $this->data;
         }
