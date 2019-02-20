@@ -23,7 +23,7 @@ export class ConsultorService {
   }
 
   data(users,since,until) {
-    // return this.http.get(`${this.configUrl}/results?users=${users}&since=${since}&until=${until}`);
-    return this.http.get(`${this.configUrl}/results?users=anapaula.chiodaro,carlos.arruda&since=01-01-2007&until=28-02-2007`);
+    return this.http.get(`${this.configUrl}/results?users=${users}&since=${since}&until=${until}`);
+    // return this.http.get(`${this.configUrl}/results?users=anapaula.chiodaro,carlos.arruda&since=01-01-2007&until=28-02-2007`);
   }
 }

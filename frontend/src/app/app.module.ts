@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ChartsModule as Ng2Charts } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,7 +40,8 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         }),
         AppRoutingModule,
-        SweetAlert2Module.forRoot()
+        SweetAlert2Module.forRoot(),
+        Ng2Charts
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

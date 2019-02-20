@@ -96,38 +96,92 @@
           </div>  
     </div>
     
-    <div class="d-flex flex-column">
-        <div class="d-flex justify-content-center">
-            <button (click)="getData()" type="button" class="btn btn-lg btn-primary">{{ 'GET.DATA' | translate}}</button>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+                <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between">
+                            <button (click)="getData(0)" type="button" class="btn btn-lg btn-primary">{{ 'GET.DATA0' | translate}}</button>
+                            <button (click)="getData(1)" type="button" class="btn btn-lg btn-primary">{{ 'GET.DATA1' | translate}}</button>
+                            <button (click)="getData(2)" type="button" class="btn btn-lg btn-primary">{{ 'GET.DATA2' | translate}}</button>
+                        </div>
+                        
+                    </div>
         </div>
     </div>
     
     
-    <div *ngFor="let resume of data">
+    <ng-container *ngIf="type == 1">
+        <div *ngFor="let resume of data; let i = index">
+            <div class="card mb-3">
+                <div class="card-header">{{resume.no_usuario}}</div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>{{'CONSULTOR.PERIOD' | translate }}</th>
+                        <th>{{'CONSULTOR.LIQUID' | translate }}</th>
+                        <th>{{'CONSULTOR.SALARY' | translate }}</th>
+                        <th>{{'CONSULTOR.COMISSION' | translate }}</th>
+                        <th>{{'CONSULTOR.PROFIT' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let row of resume.resume.monthly">
+                        <th scope="row">{{row.date}}</th>
+                        <td> R$ {{row.neto}}</td>
+                        <td>- R$ {{row.salario}}</td>
+                        <td>- R$ {{row.comision}}</td>
+                        <td> R$ {{row.lucro}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Saldo</th>
+                        <td>R$ {{resume.resume.totals.totalNeto}}</td>
+                        <td>R$ {{resume.resume.totals.totalSalario}}</td>
+                        <td>R$ {{resume.resume.totals.totalComision}}</td>
+                        <td>R$ {{resume.resume.totals.totalLucro}}</td>
+                    </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="type == 0">
         <div class="card mb-3">
-            <div class="card-header">{{resume.no_usuario}}</div>
-            <table class="table table-sm">
-                <thead>
-                <tr>
-                    <th>{{'CONSULTOR.PERIOD' | translate }}</th>
-                    <th>{{'CONSULTOR.LIQUID' | translate }}</th>
-                    <th>{{'CONSULTOR.SALARY' | translate }}</th>
-                    <th>{{'CONSULTOR.COMISSION' | translate }}</th>
-                    <th>{{'CONSULTOR.PROFIT' | translate }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let row of resume.data">
-                    <th scope="row">{{row.date}}</th>
-                    <td> R$ {{row.neto}}</td>
-                    <td>- R$ {{row.salario}}</td>
-                    <td>- R$ {{row.comision}}</td>
-                    <td> R$ {{row.lucro}}</td>
-                </tr>
-                
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <div class="card-header">
+                {{'GET.DATA0' | translate }}
+            </div>
+            <div class="card-body">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                </canvas>
+            </div>
+        </div>    
+    </ng-container>
+
+    <ng-container *ngIf="type == 2">
+        <div class="card mb-3">
+            <div class="card-header">
+                {{'GET.DATA2' | translate}}
+            </div>
+            <div class="card-body">
+                <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType">
+                </canvas>
+            </div>
+        </div>    
+    </ng-container>
     
+      
+    <!-- <div class="card mb-3">
+        <div class="card-header">
+            Bar Chart
+        </div>
+        <div class="card-body">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-info btn-sm" (click)="randomize()">Update</button>
+        </div>
+    </div>     -->
 </div>
